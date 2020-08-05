@@ -42,14 +42,24 @@ class Square extends React.Component {
 */
 
 class Board extends React.Component {
+
+    // use constructor to define vars that will be used to maintain state of the Component
     constructor(props) {
         super(props);
+        // NOTE: You should not call setState() in the constructor(
         this.state = {
-            squares: Array(9).fill(null),
-            xIsNext: true,
+            squares: Array(9).fill(null),  // Array to store state of all Squares
+            xIsNext: true,  // determines if the next is X or 0
         };
     }
 
+
+    /**
+     * On every Square button click, evaluate the state of the board. If Winner, stop the
+     * game and declare the winner. If not, then update value of what is next element to use.
+     * @param {any} i: index of the square element
+     * @returns {any}: None
+     */
     handleClick(i) {
         const squares = this.state.squares.slice();  //.slice() creates a copy
         if (calculateWinner(squares) || squares[i]) {
@@ -57,7 +67,8 @@ class Board extends React.Component {
         }
         // based on value of xIsNext, change what value the Square should have
         squares[i] = this.state.xIsNext ? 'X' : 'O';
-        //squares[i] = 'X';
+        // update all state vars for the squares and the next turn
+        // NOTE: Constructor is the only place where you should assign this.state directly. In all other methods, you need to use this.setState() instead.
         this.setState({
             squares: squares,
             xIsNext: !this.state.xIsNext,  // toggle xIsNext so the X/0 is updated
@@ -65,6 +76,11 @@ class Board extends React.Component {
     }
 
 
+    /**
+     * Creates Component Square and sets init value, and onClick callback
+     * @param {any} i: Square index
+     * @returns {any}: Square component with set value and a onClick callback
+     */
     renderSquare(i) {
         // utility method to pass props from parent->child component
         // 'value' passed as props to component 'Square'
@@ -74,18 +90,25 @@ class Board extends React.Component {
                 />;
     }
 
+
+  /**
+   * renders the Board component which is a collection of Square components
+   * @returns {any}
+   */
   render() {
-    //const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     const winner = calculateWinner(this.state.squares);
     let status;
     if (winner) {
+        // if there is already a winner, do not let the user to proceed
         status = 'Winner: ' + winner;
     }
     else
     {
+        // if there is no winner yet, let the next user choose
         status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
+    // render all the Squares and pass the state of each using 'props'
     return (
       <div>
         <div className="status">{status}</div>
@@ -109,10 +132,24 @@ class Board extends React.Component {
   }
 }
 
+
 class Game extends React.Component {
+  /**
+   * Render the Game - 2 TicTacToe baords
+   * @returns {any}: 2 TicTacToe baord components
+   */
   render() {
     return (
       <div className="game">
+        <div className="game-info">
+          <div> --- GAME-1 --- </div>
+        </div>
+        <div className="game-board">
+          <Board />
+        </div>
+        <div className="game-info">
+          <div> --- GAME-2 --- </div>
+        </div>
         <div className="game-board">
           <Board />
         </div>
@@ -125,6 +162,12 @@ class Game extends React.Component {
   }
 }
 
+
+/**
+ * Calculate the board winner
+ * @param {any} squares: Array with state of all the Squares
+ * @returns {any}:
+ */
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -139,10 +182,11 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      // return value X or 0, to indicate who is the winner
       return squares[a];
     }
   }
-  return null;
+  return null;  // no winner found
 }
 
 // ========================================
@@ -152,4 +196,5 @@ function calculateWinner(squares) {
 //   document.getElementById('root')
 // );
 
+// export this Component so that it can be imported and used in the main()
 export default Game;

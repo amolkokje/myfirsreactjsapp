@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Testapp from './Testapp';
 import Game from './TicTacToe'
+import TestappOne from './TestappOne'
 import * as serviceWorker from './serviceWorker';
 
 /////////////////////////
@@ -71,6 +72,9 @@ const hello1 = (props) => {
   )
 };
 
+
+// MAIN() - ENTRY POINT OF THE APPLICATION
+
 ReactDOM.render(
   //<React.StrictMode>
   //  <App />
@@ -83,7 +87,8 @@ ReactDOM.render(
   // <React.StrictMode>
   //   <Testapp />,
   // </React.StrictMode>,
-  <Game />,
+  // <Game />,
+  <TestappOne />,
   document.getElementById('root')
 );
 
