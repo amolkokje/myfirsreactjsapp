@@ -5,6 +5,7 @@ import App from './App';
 import Testapp from './Testapp';
 import Game from './TicTacToe'
 import TestappOne from './TestappOne'
+import TestappTwo from './TestAppTwo/App'
 import * as serviceWorker from './serviceWorker';
 
 /////////////////////////
@@ -88,7 +89,8 @@ ReactDOM.render(
   //   <Testapp />,
   // </React.StrictMode>,
   // <Game />,
-  <TestappOne />,
+  // <TestappOne />,
+  <TestappTwo />,
   document.getElementById('root')
 );
 
